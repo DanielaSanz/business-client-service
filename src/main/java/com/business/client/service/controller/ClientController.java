@@ -3,12 +3,13 @@ package com.business.client.service.controller;
 import com.business.client.service.controller.http.AddClientRequest;
 import com.business.client.service.controller.http.AddClientResponse;
 import com.business.client.service.service.AddClientService;
-import com.business.client.service.validator.ValidateRequest;
+import com.business.client.service.validator.Validator;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClientController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ClientController.class);
-    private final ValidateRequest<Object> validateRequest;
+    private final Validator<AddClientRequest> validateRequest;
     private final AddClientService addClientService;
 
-    public ClientController(ValidateRequest<Object> validateRequest, AddClientService addClientService) {
+    @Autowired
+    public ClientController(Validator<AddClientRequest> validateRequest, AddClientService addClientService) {
         this.validateRequest = validateRequest;
         this.addClientService = addClientService;
     }
+
 
     @PostMapping(
             value = "business/client/add",
@@ -41,13 +44,13 @@ public class ClientController {
         try {
             validateRequest.validate(addClientRequest);
             addClientService.addClient(addClientRequest);
-            LOGGER.info("Se agrego correctamente el cliente con nombre {}", addClientRequest.getName());
+            LOGGER.info("Se agrego correctamente el cliente {}", addClientRequest);
             return ResponseEntity.ok(new AddClientResponse((byte)0, null));
         } catch (IllegalArgumentException iae) {
             LOGGER.warn("Los parámetros ingresados no son válidos");
             return ResponseEntity.badRequest().body(new AddClientResponse(iae.getMessage()));
         } catch (Exception ex) {
-            LOGGER.error("Ocurrio un error al tratar de agregar al cliente con nombre {]", addClientRequest.getName());
+            LOGGER.error("Ocurrio un error al tratar de agregar al cliente {}", addClientRequest);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new AddClientResponse(ex.getMessage()));
         }
     }

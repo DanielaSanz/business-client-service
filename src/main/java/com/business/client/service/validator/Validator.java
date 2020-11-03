@@ -1,5 +1,5 @@
 package com.business.client.service.validator;
 
-public interface ValidateRequest<T> {
+public interface Validator <T>{
     void validate(T request);
 }

@@ -4,7 +4,7 @@
 
 <mapper namespace="com.business.client.service.mapper.AddClientMapper">
 
-    <insert id="addClientRequest">
+    <insert id="addClient">
         INSERT INTO CLIENTS (NAME,
         SURNAME,
         PHONE,
