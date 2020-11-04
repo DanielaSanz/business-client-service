@@ -1,4 +1,4 @@
-package com.business.client.service.controller.http;
+package com.business.client.service.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,17 +7,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @ToString
 public class AddClientResponse {
+
     private Byte result;
     private String errorMessage;
 
-    public AddClientResponse(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
 }

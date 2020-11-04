@@ -1,12 +1,12 @@
-package com.business.client.service.validator;
+package com.business.client.service.service;
 
-import com.business.client.service.controller.http.AddClientRequest;
+import com.business.client.service.model.AddClientRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class ValidateAddClientResquest implements Validator<AddClientRequest> {
+public class ValidateAddClientRequest implements Validator<AddClientRequest> {
 
     Validator<Integer> validateId;
     Validator<String> validateData;
@@ -20,6 +20,5 @@ public class ValidateAddClientResquest implements Validator<AddClientRequest> {
         validateData.validate(request.getSurname());
         validateData.validate(request.getPhone());
         validateData.validate(request.getAddress());
-
     }
 }

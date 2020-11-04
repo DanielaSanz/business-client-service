@@ -1,9 +1,8 @@
 package com.business.client.service.controller;
 
-import com.business.client.service.controller.http.AddClientRequest;
-import com.business.client.service.controller.http.AddClientResponse;
-import com.business.client.service.service.AddClientService;
-import com.business.client.service.validator.Validator;
+import com.business.client.service.handler.HandleAddClient;
+import com.business.client.service.model.AddClientRequest;
+import com.business.client.service.model.AddClientResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -17,41 +16,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.function.Function;
+
 @RestController
 public class ClientController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ClientController.class);
-    private final Validator<AddClientRequest> validateRequest;
-    private final AddClientService addClientService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientController.class);
+    private final Function<AddClientRequest, AddClientResponse> handleAddClient;
 
     @Autowired
-    public ClientController(Validator<AddClientRequest> validateRequest, AddClientService addClientService) {
-        this.validateRequest = validateRequest;
-        this.addClientService = addClientService;
+    public ClientController(HandleAddClient handleAddClient) {
+        this.handleAddClient = handleAddClient;
     }
-
 
     @PostMapping(
             value = "business/client/add",
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Agregar un cliente al sistema")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Se obtiene el resultado de la consulta a base", response = AddClientResponse.class),
-            @ApiResponse(code= 400, message = "Parametros invalidos", response = AddClientResponse.class),
-            @ApiResponse(code = 500, message = "Error inesperado del servicio web", response = AddClientResponse.class)
+            @ApiResponse(code = 200, message = "Se obtiene el resultado de la consulta a base", response = ClientController.class),
+            @ApiResponse(code= 400, message = "Parametros invalidos", response = ClientController.class),
+            @ApiResponse(code = 500, message = "Error inesperado del servicio web", response = ClientController.class)
     })
     public ResponseEntity<AddClientResponse> addClient(@RequestBody AddClientRequest addClientRequest) {
         try {
-            validateRequest.validate(addClientRequest);
-            addClientService.addClient(addClientRequest);
-            LOGGER.info("Se agrego correctamente el cliente {}", addClientRequest);
-            return ResponseEntity.ok(new AddClientResponse((byte)0, null));
-        } catch (IllegalArgumentException iae) {
-            LOGGER.warn("Los parámetros ingresados no son válidos");
-            return ResponseEntity.badRequest().body(new AddClientResponse(iae.getMessage()));
+            return ResponseEntity.ok(handleAddClient.apply(addClientRequest));
         } catch (Exception ex) {
-            LOGGER.error("Ocurrio un error al tratar de agregar al cliente {}", addClientRequest);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new AddClientResponse(ex.getMessage()));
+            LOGGER.warn("Ocurrio un error al tratar de agregar al cliente {}", addClientRequest);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new AddClientResponse(null, ex.getMessage()));
         }
+
     }
 }
