@@ -5,12 +5,8 @@
 <mapper namespace="com.business.client.service.mapper.AddClientMapper">
 
     <insert id="addClient">
-        INSERT INTO CLIENTS (NAME,
-        SURNAME,
-        PHONE,
-        ADRESS,
-        ID_TYPE_CLIENT)
-        VALUES ('Victoria', 'Lescurat', '3518118800', 'Coronel 489', 2);
+        INSERT INTO CLIENTS (NAME, SURNAME, PHONE, ADDRESS, ID_TYPE_CLIENT)
+        VALUES (#{request.name}, #{request.surname}, #{request.phone}, #{request.address}, #{request.typeClient})
     </insert>
 
 </mapper>

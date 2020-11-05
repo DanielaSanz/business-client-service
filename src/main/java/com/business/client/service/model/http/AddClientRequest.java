@@ -1,4 +1,4 @@
-package com.business.client.service.controller.http;
+package com.business.client.service.model.http;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @ToString
 public class AddClientRequest {
     private String name;
