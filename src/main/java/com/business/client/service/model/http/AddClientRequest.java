@@ -1,4 +1,4 @@
-package com.business.client.service.model;
+package com.business.client.service.model.http;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,9 +13,10 @@ import lombok.ToString;
 @Setter
 @Builder
 @ToString
-public class AddClientResponse {
-
-    private Byte result;
-    private String errorMessage;
-
+public class AddClientRequest {
+    private String name;
+    private String surname;
+    private String phone;
+    private String address;
+    private Integer typeClient;
 }

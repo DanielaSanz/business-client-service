@@ -1,8 +1,9 @@
 package com.business.client.service.controller;
 
-import com.business.client.service.handler.HandleAddClient;
-import com.business.client.service.model.AddClientRequest;
-import com.business.client.service.model.AddClientResponse;
+import com.business.client.service.handler.AddClientHandler;
+import com.business.client.service.model.http.AddClientRequest;
+import com.business.client.service.model.http.AddClientResponse;
+import com.business.client.service.model.http.GenericResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -22,11 +23,11 @@ import java.util.function.Function;
 public class ClientController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientController.class);
-    private final Function<AddClientRequest, AddClientResponse> handleAddClient;
+    private final Function<AddClientRequest, AddClientResponse> handlerAddClient;
 
     @Autowired
-    public ClientController(HandleAddClient handleAddClient) {
-        this.handleAddClient = handleAddClient;
+    public ClientController(AddClientHandler addClientHandler) {
+        this.handlerAddClient = addClientHandler;
     }
 
     @PostMapping(
@@ -38,12 +39,15 @@ public class ClientController {
             @ApiResponse(code= 400, message = "Parametros invalidos", response = ClientController.class),
             @ApiResponse(code = 500, message = "Error inesperado del servicio web", response = ClientController.class)
     })
-    public ResponseEntity<AddClientResponse> addClient(@RequestBody AddClientRequest addClientRequest) {
+    public ResponseEntity<GenericResponse> addClient(@RequestBody AddClientRequest addClientRequest) {
         try {
-            return ResponseEntity.ok(handleAddClient.apply(addClientRequest));
+            return ResponseEntity.ok(handlerAddClient.apply(addClientRequest));
+        } catch (IllegalArgumentException iae) {
+            LOGGER.warn("Los parámetros ingresados no son válidos",iae.getMessage());
+            return ResponseEntity.badRequest().body(new GenericResponse(iae.getMessage()));
         } catch (Exception ex) {
             LOGGER.warn("Ocurrio un error al tratar de agregar al cliente {}", addClientRequest);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new AddClientResponse(null, ex.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new GenericResponse(ex.getMessage()));
         }
 
     }

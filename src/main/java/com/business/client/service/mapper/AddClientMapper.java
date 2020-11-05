@@ -1,6 +1,6 @@
 package com.business.client.service.mapper;
 
-import com.business.client.service.model.AddClientRequest;
+import com.business.client.service.model.http.AddClientRequest;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
