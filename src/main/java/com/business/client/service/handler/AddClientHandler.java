@@ -1,5 +1,6 @@
 package com.business.client.service.handler;
 
+import com.business.client.service.model.dto.AddClientDTO;
 import com.business.client.service.model.http.AddClientRequest;
 import com.business.client.service.model.http.AddClientResponse;
 import com.business.client.service.service.AddClientService;
@@ -11,18 +12,23 @@ import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
 
-// TODO -- Revisar como funciona una exception
 @Component
 public class AddClientHandler implements Function<AddClientRequest, AddClientResponse> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AddClientHandler.class);
     private final Validator<AddClientRequest> addClientRequestValidator;
+    private final Function<AddClientRequest, AddClientDTO> addClientAdapter;
     private final AddClientService addClientService;
+    private final Function<AddClientDTO, AddClientResponse> addResponseAdapter;
 
     @Autowired
-    public AddClientHandler(Validator<AddClientRequest> addClientRequestValidator, AddClientService addClientService) {
+    public AddClientHandler(Validator<AddClientRequest> addClientRequestValidator,
+                            Function<AddClientRequest, AddClientDTO> addClientAdapter,
+                            AddClientService addClientService, Function<AddClientDTO, AddClientResponse> addResponseAdapter) {
         this.addClientRequestValidator = addClientRequestValidator;
+        this.addClientAdapter = addClientAdapter;
         this.addClientService = addClientService;
+        this.addResponseAdapter = addResponseAdapter;
     }
 
 
@@ -30,8 +36,9 @@ public class AddClientHandler implements Function<AddClientRequest, AddClientRes
     public AddClientResponse apply(AddClientRequest addClientRequest) {
 
         addClientRequestValidator.validate(addClientRequest);
-        addClientService.addClient(addClientRequest);
+        AddClientDTO dto = addClientAdapter.apply(addClientRequest);
+        addClientService.addClient(dto);
         LOGGER.info("Se agrego correctamente el cliente {}", addClientRequest);
-        return new AddClientResponse((byte) 0);
+        return addResponseAdapter.apply(dto);
     }
 }
