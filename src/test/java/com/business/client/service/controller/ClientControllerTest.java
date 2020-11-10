@@ -22,7 +22,7 @@ class ClientControllerTest {
 
     private final AddClientRequest VALID_REQUEST = new AddClientRequest("Marla", "Singer"
             , "3518113800", "Coronel 439", 1);
-    private final AddClientResponse VALID_RESULT = new AddClientResponse( (byte)0);
+    private final AddClientResponse VALID_RESULT = new AddClientResponse( 0);
 
 
     @ParameterizedTest

@@ -17,7 +17,7 @@ class AddClientHandlerTest {
     private final AddClientRequest VALID_REQUEST = new AddClientRequest("Marla", "Singer"
             , "3518113800", "Coronel 439", 1);
     private final AddClientDTO VALID_DTO = new AddClientDTO().builder().build();
-    private final AddClientResponse VALID_RESPONSE = new AddClientResponse((byte)0);
+    private final AddClientResponse VALID_RESPONSE = new AddClientResponse(0);
     private final Byte VALID_RESULT = 0;
 
 
