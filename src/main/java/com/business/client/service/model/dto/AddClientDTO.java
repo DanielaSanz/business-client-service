@@ -17,7 +17,7 @@ public class AddClientDTO {
     private String phone;
     private String address;
     private Integer typeClient;
-    private Byte result;
+    private Integer result;
     private String errorMessage;
 
 

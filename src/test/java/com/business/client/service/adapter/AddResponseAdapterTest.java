@@ -10,7 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 class AddResponseAdapterTest {
 
-    private final AddClientDTO VALID_DTO = new AddClientDTO().builder().result((byte)0).build();
+    private final AddClientDTO VALID_DTO = new AddClientDTO().builder().result(0).build();
     private final Byte VALID_RESULT = 0;
 
     @Test

@@ -13,6 +13,6 @@ import lombok.ToString;
 @ToString
 public class AddClientResponse extends GenericResponse {
 
-    private Byte result;
+    private Integer result;
 
 }
