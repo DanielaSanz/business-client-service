@@ -25,10 +25,10 @@ public class ClientController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientController.class);
     private final Function<AddClientRequest, AddClientResponse> handlerAddClient;
 
-    @Autowired
-    public ClientController(AddClientHandler addClientHandler) {
-        this.handlerAddClient = addClientHandler;
+    public ClientController(Function<AddClientRequest, AddClientResponse> handlerAddClient) {
+        this.handlerAddClient = handlerAddClient;
     }
+
 
     @PostMapping(
             value = "business/client/add",

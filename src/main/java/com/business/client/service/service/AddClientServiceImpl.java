@@ -1,22 +1,22 @@
 package com.business.client.service.service;
 
-import com.business.client.service.mapper.AddClientMapper;
-import com.business.client.service.model.http.AddClientRequest;
+import com.business.client.service.client.AddClientClient;
+import com.business.client.service.model.dto.AddClientDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AddClientServiceImpl implements AddClientService {
 
-    private final AddClientMapper addClientMapper;
+    private final AddClientClient addClientClient;
 
     @Autowired
-    public AddClientServiceImpl(AddClientMapper addClientMapper) {
-        this.addClientMapper = addClientMapper;
+    public AddClientServiceImpl(AddClientClient addClientClient) {
+        this.addClientClient = addClientClient;
     }
 
     @Override
-    public void addClient(AddClientRequest addClientRequest) {
-        addClientMapper.addClient(addClientRequest);
+    public void addClient(AddClientDTO addClientDTO) {
+        addClientClient.addClient(addClientDTO);
     }
 }
