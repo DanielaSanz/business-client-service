@@ -1,8 +1,9 @@
 package com.business.client.service.controller;
 
 import com.business.client.service.model.http.AddClientRequest;
-import com.business.client.service.model.http.AddClientResponse;
+import com.business.client.service.model.http.ClientResponse;
 import com.business.client.service.model.http.GenericResponse;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,24 +19,22 @@ import java.util.stream.Stream;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-class ClientControllerTest {
+class AddClientControllerTest {
 
-    private final AddClientRequest VALID_REQUEST = new AddClientRequest("Marla", "Singer"
-            , "3518113800", "Coronel 439", 1);
-    private final AddClientResponse VALID_RESULT = new AddClientResponse( 0);
+    private final ClientResponse VALID_RESULT = ClientResponse.builder().result(0).build();
+    private final AddClientRequest VALID_REQUEST = AddClientRequest.builder().build();
 
-
+    @DisplayName("When AddClientRequest is null returns (400) Bad Request")
     @ParameterizedTest
     @ArgumentsSource(RequestParamSource.class)
     void addClient_RequestIsNull_ReturnsBadRequest(AddClientRequest addClientRequest) {
 
-        Function<AddClientRequest, AddClientResponse> handlerAddClient =request -> {throw new IllegalArgumentException();};
-        ClientController sut = new ClientController(handlerAddClient);
+        Function<AddClientRequest, ClientResponse> handlerAddClient = request -> {throw new IllegalArgumentException();};
+        AddClientController sut = new AddClientController(handlerAddClient);
 
         ResponseEntity<GenericResponse> responseEntity = sut.addClient(addClientRequest);
 
         assertThat(responseEntity.getStatusCode(), is(HttpStatus.BAD_REQUEST));
-
     }
 
     static class RequestParamSource implements ArgumentsProvider {
@@ -43,36 +42,42 @@ class ClientControllerTest {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) {
             return Stream.of(null,
+                    new AddClientRequest(null, "Singer", "3518113800", "Coronel 439", 1),
                     new AddClientRequest("", "Singer", "3518113800", "Coronel 439", 1),
-                    new AddClientRequest("Marla", "", "", "Coronel 439", 1),
+                    new AddClientRequest("Marla", null, "3518113800", "Coronel 439", 1),
+                    new AddClientRequest("Marla", "", "3518113800", "Coronel 439", 1),
+                    new AddClientRequest("Marla", "Singer", null, "Coronel 439", 1),
+                    new AddClientRequest("Marla", "Singer", "", "Coronel 439", 1),
+                    new AddClientRequest("", "Singer", "3518113800", null, 1),
                     new AddClientRequest("Marla", "Singer", "3518113800", "", 1),
                     new AddClientRequest("Marla", "Singer", "3518113800", "Coronel 439", null),
                     new AddClientRequest("Marla", "Singer", "3518113800", "Coronel 439", 0),
-            new AddClientRequest("Marla", "Singer", "3518113800", "Coronel 439", -1)
+                    new AddClientRequest( "Marla", "Singer", "3518113800", "Coronel 439", -1)
             ).map(Arguments::of);
         }
     }
 
+    @DisplayName("When addClient throws exception returns (500) Internal Server Error")
     @Test
     void addClient_ThrowsException_ReturnsInternalServerError() {
 
-        Function<AddClientRequest, AddClientResponse> handlerAddClient = response -> { throw new RuntimeException();};
-        ClientController sut = new ClientController(handlerAddClient);
+        Function<AddClientRequest, ClientResponse> handlerAddClient = response -> { throw new RuntimeException();};
+        AddClientController sut = new AddClientController(handlerAddClient);
 
         final ResponseEntity<GenericResponse> responseEntity = sut.addClient(VALID_REQUEST);
 
         assertThat(responseEntity.getStatusCode(), is (HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
+    @DisplayName("When addClient no caught any exception returns (200) OK")
     @Test
     void addClient_NoCaughtException_ReturnsOK() {
 
-        Function<AddClientRequest, AddClientResponse> handlerAddClient = response -> VALID_RESULT;
-        ClientController sut = new ClientController(handlerAddClient);
+        Function<AddClientRequest, ClientResponse> handlerAddClient = response -> VALID_RESULT;
+        AddClientController sut = new AddClientController(handlerAddClient);
 
         final ResponseEntity<GenericResponse> responseEntity = sut.addClient(VALID_REQUEST);
 
         assertThat(responseEntity.getStatusCode(), is (HttpStatus.OK));
     }
-
 }

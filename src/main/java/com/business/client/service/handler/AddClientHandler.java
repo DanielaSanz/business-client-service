@@ -1,8 +1,8 @@
 package com.business.client.service.handler;
 
-import com.business.client.service.model.dto.AddClientDTO;
+import com.business.client.service.model.dto.ClientDTO;
 import com.business.client.service.model.http.AddClientRequest;
-import com.business.client.service.model.http.AddClientResponse;
+import com.business.client.service.model.http.ClientResponse;
 import com.business.client.service.service.AddClientService;
 import com.business.client.service.service.Validator;
 import org.slf4j.Logger;
@@ -13,32 +13,31 @@ import org.springframework.stereotype.Component;
 import java.util.function.Function;
 
 @Component
-public class AddClientHandler implements Function<AddClientRequest, AddClientResponse> {
+public class AddClientHandler implements Function<AddClientRequest, ClientResponse> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AddClientHandler.class);
     private final Validator<AddClientRequest> addClientRequestValidator;
-    private final Function<AddClientRequest, AddClientDTO> addClientAdapter;
+    private final Function<AddClientRequest, ClientDTO> addClientAdapter;
     private final AddClientService addClientService;
-    private final Function<AddClientDTO, AddClientResponse> addResponseAdapter;
+    private final Function<ClientDTO, ClientResponse> addResponseAdapter;
 
     @Autowired
     public AddClientHandler(Validator<AddClientRequest> addClientRequestValidator,
-                            Function<AddClientRequest, AddClientDTO> addClientAdapter,
-                            AddClientService addClientService, Function<AddClientDTO, AddClientResponse> addResponseAdapter) {
+                            Function<AddClientRequest, ClientDTO> addClientAdapter,
+                            AddClientService addClientService, Function<ClientDTO, ClientResponse> addResponseAdapter) {
         this.addClientRequestValidator = addClientRequestValidator;
         this.addClientAdapter = addClientAdapter;
         this.addClientService = addClientService;
         this.addResponseAdapter = addResponseAdapter;
     }
 
-
     @Override
-    public AddClientResponse apply(AddClientRequest addClientRequest) {
+    public ClientResponse apply(AddClientRequest addClientRequest) {
 
         addClientRequestValidator.validate(addClientRequest);
-        AddClientDTO dto = addClientAdapter.apply(addClientRequest);
+        ClientDTO dto = addClientAdapter.apply(addClientRequest);
         addClientService.addClient(dto);
-        LOGGER.info("Se agrego correctamente el cliente {}", addClientRequest);
+        LOGGER.info("The client was successfully added {}", addClientRequest);
         return addResponseAdapter.apply(dto);
     }
 }

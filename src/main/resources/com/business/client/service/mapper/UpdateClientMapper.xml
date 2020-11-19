@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.business.client.service.mapper.UpdateClientMapper">
+
+    <update id="addClient" statementType="CALLABLE">
+      {
+        #{dto.result, mode=OUT, jdbcType=INTEGER} = call
+        F_UPDATE_CLIENT
+        (#{dto.id, mode=IN, jdbcType=NUMERIC},
+        #{dto.name, mode=IN, jdbcType=VARCHAR},
+        #{dto.surname, mode=IN, jdbcType=VARCHAR},
+        #{dto.phone, mode=IN, jdbcType=VARCHAR},
+        #{dto.address, mode=IN, jdbcType=VARCHAR},
+        #{dto.typeClient, mode=IN, jdbcType=NUMERIC},
+        #{dto.errorMessage, mode=OUT, jdbcType=VARCHAR})
+      }
+    </update>
+
+</mapper>

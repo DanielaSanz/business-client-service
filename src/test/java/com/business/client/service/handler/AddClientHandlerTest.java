@@ -1,37 +1,57 @@
 package com.business.client.service.handler;
 
-import com.business.client.service.model.dto.AddClientDTO;
+import com.business.client.service.adapter.AddClientAdapter;
+import com.business.client.service.adapter.ResponseAdapter;
+import com.business.client.service.model.dto.ClientDTO;
 import com.business.client.service.model.http.AddClientRequest;
-import com.business.client.service.model.http.AddClientResponse;
+import com.business.client.service.model.http.ClientResponse;
 import com.business.client.service.service.AddClientService;
 import com.business.client.service.service.Validator;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import java.util.function.Function;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class AddClientHandlerTest {
 
-    private final AddClientRequest VALID_REQUEST = new AddClientRequest("Marla", "Singer"
-            , "3518113800", "Coronel 439", 1);
-    private final AddClientDTO VALID_DTO = new AddClientDTO().builder().build();
-    private final AddClientResponse VALID_RESPONSE = new AddClientResponse(0);
-    private final Byte VALID_RESULT = 0;
+    private AddClientHandler sut;
 
+    @Mock
+    private Validator<AddClientRequest> mockAddClientRequestValidator;
+    @Mock
+    private AddClientAdapter mockAddClientAdapter;
+    @Mock
+    private AddClientService mockAddClientService;
+    @Mock
+    private ResponseAdapter mockResponseAdapter;
 
+    @BeforeEach
+    void setUp(){
+        MockitoAnnotations.initMocks(this);
+        sut = new AddClientHandler(mockAddClientRequestValidator, mockAddClientAdapter,
+                mockAddClientService, mockResponseAdapter);
+    }
+
+    @DisplayName("Should returns ClientResponse correctly")
     @Test
-    public void AddClientHandler(){
-        Validator<AddClientRequest> addClientRequestValidator = request -> {};
-        Function<AddClientRequest, AddClientDTO> addClientAdapter = param -> VALID_DTO;
-        AddClientService addClientService = addClientRequest ->  {};
-        Function<AddClientDTO, AddClientResponse> addResponseAdapter = param -> VALID_RESPONSE;
-        AddClientHandler sut = new AddClientHandler(addClientRequestValidator,
-                addClientAdapter, addClientService, addResponseAdapter);
+    public void apply_NotExceptionCaught_ReturnClientResponse() {
 
-        AddClientResponse response = sut.apply(VALID_REQUEST);
+        final AddClientRequest VALID_REQUEST = AddClientRequest.builder().build();
+        final ClientDTO VALID_DTO = ClientDTO.builder().build();
+        final ClientResponse VALID_RESPONSE = ClientResponse.builder().result(0).build();
 
-        assertThat(response.getResult(), is(VALID_RESULT));
+        when(mockAddClientAdapter.apply(VALID_REQUEST)).thenReturn(VALID_DTO);
+        when(mockResponseAdapter.apply(VALID_DTO)).thenReturn(VALID_RESPONSE);
+
+        final ClientResponse response = sut.apply(VALID_REQUEST);
+
+        verify(mockAddClientRequestValidator).validate(VALID_REQUEST);
+        verify(mockAddClientService).addClient(VALID_DTO);
+        assertNotNull(response);
     }
 }

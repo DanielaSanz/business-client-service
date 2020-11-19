@@ -11,7 +11,7 @@ import java.io.FileReader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SwaggerConfigTest {
+public class  SwaggerConfigTest {
 
     private SwaggerConfig config;
 
@@ -32,5 +32,4 @@ public class SwaggerConfigTest {
         }
         throw new FileNotFoundException("pom.xml must exist");
     }
-
 }
