@@ -1,7 +1,7 @@
 package com.business.client.service.service;
 
 import com.business.client.service.client.AddClientClient;
-import com.business.client.service.model.dto.AddClientDTO;
+import com.business.client.service.model.dto.ClientDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class AddClientServiceImpl implements AddClientService {
     }
 
     @Override
-    public void addClient(AddClientDTO addClientDTO) {
-        addClientClient.addClient(addClientDTO);
+    public void addClient(ClientDTO clientDTO) {
+        addClientClient.addClient(clientDTO);
     }
 }

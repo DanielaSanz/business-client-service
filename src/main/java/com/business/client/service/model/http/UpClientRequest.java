@@ -1,24 +1,23 @@
-package com.business.client.service.model.dto;
+package com.business.client.service.model.http;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class AddClientDTO {
+@ToString
+public class UpClientRequest {
+    private Integer id;
     private String name;
     private String surname;
     private String phone;
     private String address;
     private Integer typeClient;
-    private Integer result;
-    private String errorMessage;
-
-
 }

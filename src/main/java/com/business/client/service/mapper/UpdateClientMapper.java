@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
-public interface AddClientMapper {
+public interface UpdateClientMapper {
 
-    void addClient(@Param("dto") ClientDTO clientDTO);
+    void upClient(@Param("dto") ClientDTO clientDTO);
 }

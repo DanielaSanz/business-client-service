@@ -1,16 +1,17 @@
 package com.business.client.service.adapter;
 
 import com.business.client.service.model.dto.ClientDTO;
-import com.business.client.service.model.http.AddClientRequest;
+import com.business.client.service.model.http.UpClientRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-class AddClientAdapterTest {
+class UpClientAdapterTest {
 
-    private final AddClientRequest VALID_REQUEST = AddClientRequest.builder()
+    private final UpClientRequest VALID_REQUEST = UpClientRequest.builder()
+            .id(1)
             .name("Marla")
             .surname("Singer")
             .phone("3518113800")
@@ -18,6 +19,7 @@ class AddClientAdapterTest {
             .typeClient(1)
             .build();
     private final ClientDTO VALID_DTO = ClientDTO.builder()
+            .id(1)
             .name("Marla")
             .surname("Singer")
             .phone("3518113800")
@@ -28,9 +30,10 @@ class AddClientAdapterTest {
     @Test
     void apply_NoCaughtException_ReturnsClientDto() {
 
-        AddClientAdapter sut = new AddClientAdapter();
+        UpClientAdapter sut = new UpClientAdapter();
         ClientDTO dto = sut.apply(VALID_REQUEST);
 
+        assertThat(dto.getId(), is (VALID_DTO.getId()));
         assertThat(dto.getName(), is(VALID_DTO.getName()));
         assertThat(dto.getSurname(), is(VALID_DTO.getSurname()));
         assertThat(dto.getPhone(), is(VALID_DTO.getPhone()));

@@ -1,6 +1,6 @@
 package com.business.client.service.service;
 
-import com.business.client.service.model.http.AddClientRequest;
+import com.business.client.service.model.http.UpClientRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,15 +8,17 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import static org.junit.Assert.assertThrows;
 
-class ValidateAddClientRequestTest {
+class ValidateUpClientRequestTest {
 
+    private static final Integer ID = 1;
     private static final String NAME = "Name";
     private static final String SURNAME = "Surname";
     private static final String PHONE = "Phone";
     private static final String ADDRESS = "Address";
     private static final Integer TYPE_CLIENT  = 1;
 
-    private final AddClientRequest request = AddClientRequest.builder()
+    private final UpClientRequest request = UpClientRequest.builder()
+            .id(ID)
             .name(NAME)
             .surname(SURNAME)
             .phone(PHONE)
@@ -24,12 +26,26 @@ class ValidateAddClientRequestTest {
             .typeClient(TYPE_CLIENT)
             .build();
 
-    ValidateAddClientRequest sut = new ValidateAddClientRequest();
+    private ValidateUpClientRequest sut = new ValidateUpClientRequest();
 
     @DisplayName("When request is null should throw IllegalArgumentException")
     @Test
     public void validate_RequestIsNull_ThrowIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, ()-> sut.validate(null));
+    }
+
+    @DisplayName("When id is null should throw IllegalArgumentException")
+    @Test
+    public void validate_IdIsNull_ThrowIllegalArgumentException() {
+        request.setId(null);
+        assertThrows(IllegalArgumentException.class, ()-> sut.validate(request));
+    }
+
+    @DisplayName("When id is less or equals zero should throw IllegalArgumentException")
+    @Test
+    public void validate_IdIsLessOrEqualsZero_ThrowIllegalArgumentException() {
+        request.setId(0);
+        assertThrows(IllegalArgumentException.class, ()-> sut.validate(request));
     }
 
     @DisplayName("When name is null or empty should throw IllegalArgumentException")
@@ -81,6 +97,7 @@ class ValidateAddClientRequestTest {
     @DisplayName("When request is validate pass validation")
     @Test
     public void validate_RequestIsValid_DoNothing() {
-       sut.validate(request);
+
+        sut.validate(request);
     }
 }
