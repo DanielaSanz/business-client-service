@@ -24,7 +24,8 @@ public class AddClientHandler implements Function<AddClientRequest, ClientRespon
     @Autowired
     public AddClientHandler(Validator<AddClientRequest> addClientRequestValidator,
                             Function<AddClientRequest, ClientDTO> addClientAdapter,
-                            AddClientService addClientService, Function<ClientDTO, ClientResponse> addResponseAdapter) {
+                            AddClientService addClientService,
+                            Function<ClientDTO, ClientResponse> addResponseAdapter) {
         this.addClientRequestValidator = addClientRequestValidator;
         this.addClientAdapter = addClientAdapter;
         this.addClientService = addClientService;

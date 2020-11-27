@@ -4,7 +4,7 @@
 
 <mapper namespace="com.business.client.service.mapper.UpdateClientMapper">
 
-    <update id="addClient" statementType="CALLABLE">
+    <update id="upClient" statementType="CALLABLE">
       {
         #{dto.result, mode=OUT, jdbcType=INTEGER} = call
         F_UPDATE_CLIENT

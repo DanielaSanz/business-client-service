@@ -28,6 +28,7 @@ class UpClientControllerTest {
     @ParameterizedTest
     @ArgumentsSource(RequestParamSource.class)
     void upClient_UpClientRequestIsNull_ReturnsBadRequest(UpClientRequest upClientRequest) {
+
         Function<UpClientRequest, ClientResponse> upClientHandler = response -> {throw new IllegalArgumentException();};
         UpClientController sut = new UpClientController(upClientHandler);
 
@@ -62,6 +63,7 @@ class UpClientControllerTest {
     @DisplayName("When upClient throws exception returns (500) Internal Server Error")
     @Test
     void upClient_ThrowsException_ReturnsInternalServerError() {
+
         Function<UpClientRequest, ClientResponse> upClientHandler = response -> {throw new RuntimeException();};
         UpClientController sut = new UpClientController(upClientHandler);
 
@@ -73,6 +75,7 @@ class UpClientControllerTest {
     @DisplayName("When upClient no caught any exception returns (200) OK")
     @Test
     void upClient_NoCaughtException_ReturnsOK() {
+
         Function<UpClientRequest, ClientResponse> upClientHandler = response -> VALID_RESULT;
         UpClientController sut = new UpClientController(upClientHandler);
 

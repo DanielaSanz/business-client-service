@@ -22,15 +22,15 @@ public class UpClientHandler implements Function<UpClientRequest, ClientResponse
     private final Function<ClientDTO, ClientResponse> upResponseAdapter;
 
     @Autowired
-    public UpClientHandler(Validator<UpClientRequest> upClientRequestValidator, Function<UpClientRequest,
-            ClientDTO> upClientAdapter, UpClientService upClientService, Function<ClientDTO,
-            ClientResponse> upResponseAdapter) {
+    public UpClientHandler(Validator<UpClientRequest> upClientRequestValidator,
+                           Function<UpClientRequest, ClientDTO> upClientAdapter,
+                           UpClientService upClientService,
+                           Function<ClientDTO, ClientResponse> upResponseAdapter) {
         this.upClientRequestValidator = upClientRequestValidator;
         this.upClientAdapter = upClientAdapter;
         this.upClientService = upClientService;
         this.upResponseAdapter = upResponseAdapter;
     }
-
 
     @Override
     public ClientResponse apply(UpClientRequest upClientRequest) {
