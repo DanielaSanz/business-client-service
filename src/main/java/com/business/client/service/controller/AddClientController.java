@@ -22,13 +22,12 @@ import java.util.function.Function;
 public class AddClientController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AddClientController.class);
-    private final Function<AddClientRequest, ClientResponse> handlerAddClient;
+    private final Function<AddClientRequest, ClientResponse> addClientHandler;
 
     @Autowired
-    public AddClientController(Function<AddClientRequest, ClientResponse> handlerAddClient) {
-        this.handlerAddClient = handlerAddClient;
+    public AddClientController(Function<AddClientRequest, ClientResponse> addClientHandler) {
+        this.addClientHandler = addClientHandler;
     }
-
 
     @PostMapping(
             value = "business/client/add",
@@ -41,7 +40,7 @@ public class AddClientController {
     })
     public ResponseEntity<GenericResponse> addClient(@RequestBody AddClientRequest addClientRequest) {
         try {
-            return ResponseEntity.ok(handlerAddClient.apply(addClientRequest));
+            return ResponseEntity.ok(addClientHandler.apply(addClientRequest));
         } catch (IllegalArgumentException iae) {
             LOGGER.warn(iae.getMessage(), iae);
             return ResponseEntity.badRequest().body(new GenericResponse(iae.getMessage()));

@@ -12,6 +12,5 @@ import lombok.ToString;
 @Setter
 @ToString
 public class GenericResponse {
-
     private String errorMessage;
 }

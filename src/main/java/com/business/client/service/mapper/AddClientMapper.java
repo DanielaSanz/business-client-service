@@ -6,6 +6,5 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface AddClientMapper {
-
     void addClient(@Param("dto") ClientDTO clientDTO);
 }

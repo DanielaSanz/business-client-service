@@ -15,6 +15,7 @@ class ResponseAdapterTest {
     @DisplayName("Should returns ClientDto correctly")
     @Test
     void apply_NoCaughtException_ReturnClientDTO(){
+
         ResponseAdapter sut = new ResponseAdapter();
         ClientResponse response = sut.apply(clientDto);
 

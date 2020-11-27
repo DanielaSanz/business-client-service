@@ -97,7 +97,6 @@ class ValidateUpClientRequestTest {
     @DisplayName("When request is validate pass validation")
     @Test
     public void validate_RequestIsValid_DoNothing() {
-
         sut.validate(request);
     }
 }

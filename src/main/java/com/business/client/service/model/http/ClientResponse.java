@@ -14,6 +14,5 @@ import lombok.ToString;
 @ToString
 @Builder
 public class ClientResponse extends GenericResponse {
-
     private Integer result;
 }
