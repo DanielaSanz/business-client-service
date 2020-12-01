@@ -1,7 +1,8 @@
-package com.business.client.service.service;
+package com.business.client.service.service.impl;
 
 import com.business.client.service.client.AddClientClient;
 import com.business.client.service.model.dto.ClientDTO;
+import com.business.client.service.service.AddClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

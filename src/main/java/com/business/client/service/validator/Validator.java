@@ -1,4 +1,4 @@
-package com.business.client.service.service;
+package com.business.client.service.validator;
 
 public interface Validator<T> {
     void validate(T request);

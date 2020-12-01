@@ -1,12 +1,13 @@
-package com.business.client.service.service;
+package com.business.client.service.validator;
 
 import com.business.client.service.model.http.AddClientRequest;
+import com.business.client.service.validator.ValidateAddClientRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ValidateAddClientRequestTest {
 

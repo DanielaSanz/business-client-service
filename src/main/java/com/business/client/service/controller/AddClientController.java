@@ -30,7 +30,7 @@ public class AddClientController {
     }
 
     @PostMapping(
-            value = "business/client/add",
+            value = "/add",
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Add a customer to the system")
     @ApiResponses({

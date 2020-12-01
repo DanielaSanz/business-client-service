@@ -4,7 +4,7 @@ import com.business.client.service.model.dto.ClientDTO;
 import com.business.client.service.model.http.ClientResponse;
 import com.business.client.service.model.http.UpClientRequest;
 import com.business.client.service.service.UpClientService;
-import com.business.client.service.service.Validator;
+import com.business.client.service.validator.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

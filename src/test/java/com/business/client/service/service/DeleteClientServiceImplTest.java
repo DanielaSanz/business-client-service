@@ -2,13 +2,14 @@ package com.business.client.service.service;
 
 import com.business.client.service.client.DeleteClientClient;
 import com.business.client.service.model.dto.ClientDTO;
+import com.business.client.service.service.impl.DeleteClientServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;

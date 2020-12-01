@@ -1,9 +1,10 @@
-package com.business.client.service.service;
+package com.business.client.service.validator;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 class ValidateDeleteClientRequestTest {
 
@@ -12,13 +13,13 @@ class ValidateDeleteClientRequestTest {
     @DisplayName("When id is null should throw IllegalArgumentException")
     @Test
     public void validate_IdIsNull_ThrowIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, ()-> sut.validate(null));
+        assertThrows(IllegalArgumentException.class, () -> sut.validate(null));
     }
 
     @DisplayName("When id is less or equals zero should throw IllegalArgumentException")
     @Test
     public void validate_IdIsLessOrEqualsZero_ThrowIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, ()-> sut.validate(0));
+        assertThrows(IllegalArgumentException.class, () -> sut.validate(0));
     }
 
     @DisplayName("When id is validate pass validation")

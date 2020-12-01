@@ -6,7 +6,7 @@ import com.business.client.service.model.dto.ClientDTO;
 import com.business.client.service.model.http.AddClientRequest;
 import com.business.client.service.model.http.ClientResponse;
 import com.business.client.service.service.AddClientService;
-import com.business.client.service.service.Validator;
+import com.business.client.service.validator.Validator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
