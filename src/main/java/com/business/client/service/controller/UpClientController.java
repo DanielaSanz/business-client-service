@@ -30,7 +30,7 @@ public class UpClientController {
     }
 
     @PutMapping(
-            value = "business/client/up",
+            value = "/up",
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Update a customer to the system")
     @ApiResponses({

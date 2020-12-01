@@ -1,5 +1,6 @@
 package com.business.client.service.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -13,18 +14,22 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {
-    private static final String TITLE = "CLIENT REST API";
-    private static final Contact CONTACT = new Contact("CLIENT SERVICE", null,
-            "julian.markowskyj@gmail.com.ar");
-    private static final String DESCRIPTION = "Servicio para insertar clientes";
-    private static final String SERVICE_VERSION = "0.0.1";
+
+    private static final Contact CONTACT = new Contact("Daniela Sanchez", null,
+            "daniela.sanchzcv@gmail.com");
+    @Value("${info.app.name}")
+    private String title;
+    @Value("${info.app.description}")
+    private String description;
+    @Value("${info.app.version}")
+    private String version;
 
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title(TITLE)
+                .title(title)
                 .contact(CONTACT)
-                .version(SERVICE_VERSION)
-                .description(DESCRIPTION)
+                .version(version)
+                .description(description)
                 .build();
     }
 
@@ -34,7 +39,8 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .pathMapping("/")
                 .select()
-                .paths(PathSelectors.regex("/business/client/.*"))
+                .paths(PathSelectors.regex("(?!/error).+"))
+                .paths(PathSelectors.regex("(?!/actuator).+"))
                 .build();
     }
 }

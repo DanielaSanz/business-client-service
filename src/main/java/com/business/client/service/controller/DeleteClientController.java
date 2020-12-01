@@ -29,7 +29,7 @@ public class DeleteClientController {
     }
 
     @DeleteMapping(
-            value = "business/client/delete/{idClient}",
+            value = "/delete/{idClient}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Delete a customer to the system")
     @ApiResponses({

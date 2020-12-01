@@ -2,6 +2,7 @@ package com.business.client.service.service;
 
 import com.business.client.service.client.AddClientClient;
 import com.business.client.service.model.dto.ClientDTO;
+import com.business.client.service.service.impl.AddClientServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

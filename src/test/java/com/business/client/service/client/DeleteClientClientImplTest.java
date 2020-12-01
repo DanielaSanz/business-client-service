@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
@@ -38,6 +38,6 @@ class DeleteClientClientImplTest {
     @Test
     void deleteClient_obtainMapperThrowException_ThrowRuntimeException() {
         doThrow(new RuntimeException("something bad happened")).when(deleteClientMapper).deleteClient(clientDto);
-        assertThrows(RuntimeException.class, ()-> sut.deleteClient(clientDto));
+        assertThrows(RuntimeException.class, () -> sut.deleteClient(clientDto));
     }
 }

@@ -1,6 +1,7 @@
-package com.business.client.service.service;
+package com.business.client.service.validator;
 
 import com.business.client.service.model.http.AddClientRequest;
+import com.business.client.service.validator.Validator;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
